@@ -1,10 +1,13 @@
 package com.sparta.mypostsparta.security;
+
 import com.sparta.mypostsparta.domain.Users;
+import com.sparta.mypostsparta.domain.enums.UserRole;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -22,6 +25,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getPassword() {
         return user.getPassword();
     }
+
 
     @Override
     public String getUsername() {
@@ -50,6 +54,13 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        UserRole role = user.getRole();
+        String authority = role.getAuthority();
+
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(simpleGrantedAuthority);
+
+        return authorities;
     }
 }
