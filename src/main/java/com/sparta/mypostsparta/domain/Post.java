@@ -19,6 +19,9 @@ public class Post extends Timestamped {
 
     @Column(nullable = false)
     private String content;  // 게시글 본문
+    
+    @Column(nullable = true)
+    private String password; // 개별 게시글 작성 및 수정용 비번
 
 
     // Eager => Post 조회 시, User 객체 같이 조회 (Lazy는 실제 사용 시 조회)
@@ -31,5 +34,18 @@ public class Post extends Timestamped {
         this.title = title;
         this.content = content;
         this.user = user;
+    }
+
+    @Builder  // 개별 게시글용
+    public Post(String title, String content, Users user, String password) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+        this.password = password;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 }

@@ -1,10 +1,7 @@
 package com.sparta.mypostsparta.controller;
 
 
-import com.sparta.mypostsparta.controller.dto.PostListResponseDto;
-import com.sparta.mypostsparta.controller.dto.PostResponseDto;
-import com.sparta.mypostsparta.controller.dto.PostSaveRequestDto;
-import com.sparta.mypostsparta.controller.dto.SignupRequestDto;
+import com.sparta.mypostsparta.controller.dto.*;
 import com.sparta.mypostsparta.service.PostService;
 import com.sparta.mypostsparta.service.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +30,11 @@ public class PostApiController {
     @GetMapping("/api/post/{id}")  // 게시글 개별 조회
     public PostResponseDto findById(@PathVariable Long id) {
         return postService.findById(id);
+    }
+
+    @PutMapping("api/post/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
+        return postService.update(id, requestDto);
     }
 
 }
